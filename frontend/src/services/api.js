@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+// Normalize baseURL so it always points to the backend /api prefix without trailing slashes or duplicate /api
+const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const cleanApiUrl = rawApiUrl.replace(/\/+$/, '');
+const baseURL = cleanApiUrl.endsWith('/api') ? cleanApiUrl : `${cleanApiUrl}/api`;
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
